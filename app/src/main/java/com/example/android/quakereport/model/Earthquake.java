@@ -1,6 +1,6 @@
 package com.example.android.quakereport.model;
 
-import java.util.Date;
+
 
 public class Earthquake {
 

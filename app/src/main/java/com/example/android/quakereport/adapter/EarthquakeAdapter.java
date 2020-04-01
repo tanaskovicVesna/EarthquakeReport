@@ -1,7 +1,6 @@
 package com.example.android.quakereport.adapter;
 
 import android.content.Context;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,11 +13,7 @@ import androidx.annotation.Nullable;
 import com.example.android.quakereport.R;
 import com.example.android.quakereport.model.Earthquake;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
+
 import java.util.List;
 
 public class EarthquakeAdapter extends ArrayAdapter<Earthquake> {

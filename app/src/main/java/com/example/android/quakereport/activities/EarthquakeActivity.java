@@ -17,7 +17,7 @@ package com.example.android.quakereport.activities;
 
 import android.os.Bundle;
 
-import android.widget.ArrayAdapter;
+
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,11 +26,8 @@ import com.example.android.quakereport.R;
 import com.example.android.quakereport.adapter.EarthquakeAdapter;
 import com.example.android.quakereport.model.Earthquake;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+
 
 public class EarthquakeActivity extends AppCompatActivity {
 
