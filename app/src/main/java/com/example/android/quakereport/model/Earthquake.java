@@ -5,24 +5,25 @@ package com.example.android.quakereport.model;
 public class Earthquake {
 
     private String mLocation;
-    private String mDate;
+    private long mTimeInMilliseconds;
     private double mMagnitude;
 
-    public Earthquake(double mMagnitude, String mLocation,String mDate) {
-        this.mLocation = mLocation;
-        this.mDate = mDate;
-        this.mMagnitude = mMagnitude;
-    }
 
     public Earthquake() {
     }
 
-    public String getmDate() {
-        return mDate;
+    public long getmTimeInMilliseconds() {
+        return mTimeInMilliseconds;
     }
 
-    public void setmDate(String mDate) {
-        this.mDate = mDate;
+    public void setmTimeInMilliseconds(long mTimeInMilliseconds) {
+        this.mTimeInMilliseconds = mTimeInMilliseconds;
+    }
+
+    public Earthquake(double mMagnitude, String mLocation, long mTimeInMilliseconds) {
+        this.mLocation = mLocation;
+        this.mTimeInMilliseconds = mTimeInMilliseconds;
+        this.mMagnitude = mMagnitude;
     }
 
     public double getmMagnitude() {

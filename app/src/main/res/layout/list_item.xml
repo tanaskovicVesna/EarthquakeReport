@@ -2,11 +2,11 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="horizontal"
     android:minHeight="?android:attr/listPreferredItemHeight"
     android:padding="16dp"
-    android:weightSum="3"
-    >
+    android:weightSum="5">
     <TextView
         android:id="@+id/magnitude"
         android:layout_weight="1"
@@ -15,17 +15,30 @@
 
     <TextView
         android:layout_gravity="center"
-        android:id="@+id/location"
+        android:id="@+id/location_offset"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>
     <TextView
-        android:gravity="right"
-        android:id="@+id/date"
+        android:layout_gravity="center"
+        android:id="@+id/primary_location"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"/>
+    <TextView
+        android:gravity="center_horizontal"
+        android:id="@+id/date"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        tools:text="Mar 6, 2010"/>
 
-
+    <TextView
+        android:gravity="right"
+        android:id="@+id/time"
+        android:layout_weight="1"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        tools:text="3:00 PM"/>
 
 </LinearLayout>
