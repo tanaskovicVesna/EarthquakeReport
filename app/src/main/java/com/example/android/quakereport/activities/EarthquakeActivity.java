@@ -17,12 +17,12 @@ package com.example.android.quakereport.activities;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -39,27 +39,75 @@ public class EarthquakeActivity extends AppCompatActivity{
 
     public static final String LOG_TAG = EarthquakeActivity.class.getName();
 
+    /** URL for earthquake data from the USGS dataset */
+    private static final String USGS_REQUEST_URL =
+            "https://earthquake.usgs.gov/fdsnws/event/1/query?format=geojson&starttime=2016-01-01&endtime=2016-05-02&minfelt=50&minmagnitude=5";
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.earthquake_activity);
 
+        // Create an {@link AsyncTask} to perform the HTTP request to the given URL
+        // on a background thread. When the result is received on the main UI thread,
+        // then update the UI.
+        EarthquakeAsyncTask task = new EarthquakeAsyncTask();
+        task.execute(USGS_REQUEST_URL);
 
-/**     //   1   Create a fake list of earthquake locations.
-        ArrayList<Earthquake> earthquakes = new ArrayList<Earthquake>();
 
-        earthquakes.add(new Earthquake(7.2,"San Francisco","Feb 2,2016"));
-        earthquakes.add(new Earthquake(6.2, "London","July 20,2015"));
-        earthquakes.add(new Earthquake(3.9, "Tokyo","Nov 10,2014"));
-        earthquakes.add(new Earthquake(5.4, "Mexico City","May 3,2014"));
-        earthquakes.add(new Earthquake(2.8, "Moscow","Jan 31,2013"));
-        earthquakes.add(new Earthquake(4.9, "Rio de Janeiro","Aug 19,2012"));
-        earthquakes.add(new Earthquake(1.6, "Paris","Oct 30,2011"));
 
-*/
 
-        ArrayList<Earthquake> earthquakes = QueryUtils.extractEarthquakes();
 
+    }
+
+    /**
+     * {@link AsyncTask} to perform the network request on a background thread, and then
+     * update the UI with the first earthquake in the response.
+     */
+    private class  EarthquakeAsyncTask extends AsyncTask<String, Void, ArrayList<Earthquake>> {
+
+        /**
+         * This method is invoked (or called) on a background thread, so we can perform
+         * long-running operations like making a network request.
+         * <p>
+         * It is NOT okay to update the UI from a background thread, so we just return an
+         * {@link } object as the result.
+         */
+        @Override
+        protected ArrayList<Earthquake>doInBackground(String... urls) {
+            // Don't perform the request if there are no URLs, or the first URL is null.
+            if (urls.length < 1 || urls[0] == null) {
+                return null;
+            }
+
+            ArrayList<Earthquake> earthquakes  = QueryUtils.fetchEarthquakeData(urls[0]);
+            return earthquakes;
+        }
+
+        /**
+         * This method is invoked on the main UI thread after the background work has been
+         * completed.
+         * <p>
+         * It IS okay to modify the UI within this method. We take the {@link ArrayList<Earthquake>} object
+         * (which was returned from the doInBackground() method) and update the views on the screen.
+         */
+        @Override
+        protected void onPostExecute(ArrayList<Earthquake> result) {
+            // If there is no result, do nothing.
+            if (result == null) {
+                return;
+            }
+
+            updateUi(result);
+        }
+
+    }
+
+    /**
+     * Update the UI with the given earthquake information.
+     */
+    private void updateUi( ArrayList<Earthquake> earthquakes) {
         // Create adapter that takes the list of earthquakes as input
         final EarthquakeAdapter adapter = new EarthquakeAdapter(this, earthquakes);
 
@@ -85,6 +133,7 @@ public class EarthquakeActivity extends AppCompatActivity{
         });
 
     }
+
 
 
 }
