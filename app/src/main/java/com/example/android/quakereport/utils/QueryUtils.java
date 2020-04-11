@@ -17,6 +17,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Helper methods related to requesting and receiving earthquake data from USGS.
@@ -35,9 +36,9 @@ public class QueryUtils {
     public static final String LOG_TAG = QueryUtils.class.getSimpleName();
 
     /**
-     * Query the USGS dataset and return an {@link  ArrayList<Earthquake>}  to represent a slist of earthquakes.
+     * Query the USGS dataset and return an {@link  List<Earthquake>}  to represent a slist of earthquakes.
      */
-    public static    ArrayList<Earthquake> fetchEarthquakeData(String requestUrl) {
+    public static  List<Earthquake> fetchEarthquakeData(String requestUrl) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -50,7 +51,7 @@ public class QueryUtils {
         }
 
 
-        ArrayList<Earthquake> earthquakes = extractFeatureFromJson(jsonResponse);
+       List<Earthquake> earthquakes = extractFeatureFromJson(jsonResponse);
 
         // Return the {@link ArrayList<Earthquake> earthquakes  }
         return earthquakes;
@@ -132,10 +133,10 @@ public class QueryUtils {
      * Return a list of {@link Earthquake} objects that has been built up from
      * parsing a JSON response.
      */
-    public static ArrayList<Earthquake> extractFeatureFromJson(String earthquakeJSON) {
+    public static List<Earthquake> extractFeatureFromJson(String earthquakeJSON) {
 
         // Create an empty ArrayList that we can start adding earthquakes to
-        ArrayList<Earthquake> earthquakes = new ArrayList<>();
+        List<Earthquake> earthquakes = new ArrayList<>();
 
         // If the JSON string is empty or null, then return early.
         if (TextUtils.isEmpty(earthquakeJSON)) {
