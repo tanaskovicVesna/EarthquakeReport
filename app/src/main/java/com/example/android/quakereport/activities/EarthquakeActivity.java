@@ -26,6 +26,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -53,7 +54,10 @@ public  class EarthquakeActivity extends AppCompatActivity implements android.ap
      * Constant value for the earthquake loader ID. We can choose any integer.
      * This really only comes into play if you're using multiple loaders.
      */
+
     private static final int EARTHQUAKE_LOADER_ID = 1;
+    /** TextView that is displayed when the list is empty */
+    private TextView mEmptyStateTextView;
 
 
     /** Adapter for the list of earthquakes */
@@ -66,7 +70,8 @@ public  class EarthquakeActivity extends AppCompatActivity implements android.ap
         // Get a reference to the ListView, and attach the adapter to the listView.
         ListView listView = (ListView) findViewById(R.id.list);
 
-
+        mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
+        listView.setEmptyView(mEmptyStateTextView);
 
         mAdapter = new EarthquakeAdapter(this, new ArrayList<Earthquake>());
         listView.setAdapter(mAdapter);
@@ -105,6 +110,9 @@ public  class EarthquakeActivity extends AppCompatActivity implements android.ap
 
     @Override
     public void onLoadFinished(Loader<List<Earthquake>> loader, List<Earthquake> data) {
+        // Set empty state text to display "No earthquakes found."
+        mEmptyStateTextView.setText(R.string.no_earthquakes);
+
         // Clear the adapter of previous earthquake data
         mAdapter.clear();
 
